@@ -1,133 +1,97 @@
-# 🧑‍🤝‍🧑 Team Work Division — Pollution Comparison Project
+# 🧑‍🤝‍🧑 Team Work Division — Pollution Comparison Project (Revised)
 
 > **Team Size:** 4 members  
 > **Project:** Comparative Air Quality Analysis — Delhi, Chandigarh, Solan, Shimla
 
 ---
 
-## 📋 Division Strategy: One City Per Person + Shared Tasks
+## 📋 Revised Role Allocation Matrix
 
-Each member **owns one city** (becomes the expert for that city) AND handles a **shared technical module** that applies across all cities.
-
----
-
-## 👤 Member 1 — **Delhi + Data Collection & Cleaning**
-
-### City Ownership
-- Explain **why Delhi is the most polluted** — traffic density, industrial emissions, crop burning (Punjab/Haryana stubble), winter temperature inversion on Indo-Gangetic plains
-- Present Delhi's key stats, seasonal graphs, and worst pollution episodes
-
-### Technical Module
-- **Data Collection Pipeline** — explain how the data was fetched (`fetch_data.py`, Open-Meteo CAMS API)
-- **Data Cleaning & Preprocessing** — missing value handling, hourly → daily aggregation, datetime feature engineering
-- **CPCB AQI Formula** — explain the sub-index calculation and breakpoint table (`calculate_aqi.py`)
-
-### Presentation Slides
-1. Data source and collection method
-2. Data schema (columns, rows, pollutants tracked)
-3. Cleaning steps applied
-4. Delhi city profile — stats table, box plot, seasonal chart
+| Member | City Assigned | Technical Domain | Key Sections in Colab Notebook |
+| :--- | :--- | :--- | :--- |
+| **YOU** | 🔵 **Chandigarh** | **Machine Learning Modeling** | Section 7 (Logistic Regression, Random Forest, Feature Importance) + Live Predictor |
+| **Teammate 1** | 🔴 **Delhi** | **Data Pipeline & Cleaning** | Section 1, 2, 3 (Data Schema, Missing values, CPCB AQI calculation) |
+| **Teammate 2** | 🟢 **Solan** | **Exploratory Data Analysis (EDA)** | Section 4, 5 (Boxplots, Rolling time-series, Seasonal bars, Diurnal curves) |
+| **Teammate 3** | 🟠 **Shimla** | **Statistical Hypothesis Testing** | Section 6 (Normality test, Kruskal-Wallis test, Mann-Whitney U pairwise tests) |
 
 ---
 
-## 👤 Member 2 — **Chandigarh + EDA & Visualizations**
-
-### City Ownership
-- Explain Chandigarh's **planned city design** — high green cover, organized sectors, Shivalik foothills
-- Discuss how it is cleaner than Delhi but still affected by winter spillover and regional crop burning
-
-### Technical Module
-- **Exploratory Data Analysis (EDA)** — owns all the comparative charts:
-  - Box plots (PM2.5 & PM10 across 4 cities)
-  - Time-series rolling average AQI trends
-  - Seasonal grouped bar charts
-  - Elevation vs PM2.5 scatter plot
-  - Diurnal (24-hour) rush-hour profiles
-- Explain what each chart reveals
-
-### Presentation Slides
-1. EDA methodology — what charts were chosen and why
-2. Key comparative visualizations (3–4 best charts)
-3. Chandigarh city profile — stats, seasonal variation
-4. Insights discovered through EDA
+## 👤 Detailed Breakdown Per Person
 
 ---
 
-## 👤 Member 3 — **Solan + Statistical Hypothesis Testing**
+### 1. 🔵 YOU — **Chandigarh + Machine Learning Algorithms**
 
-### City Ownership
-- Explain Solan's unique position — **mid-altitude (1502 m) but industrialized** (Baddi-Barotiwala-Nalagarh pharmaceutical belt, NH-5 heavy traffic)
-- Discuss how Solan disproves the assumption that "hills = clean air"
+#### Your City Responsibilities (Chandigarh):
+- **Why Chandigarh matters:** Planned urban environment, located in the Shivalik foothills (Elevation: 321m), significantly higher green cover and lower congestion than Delhi.
+- **Key Stats to highlight:** 
+  - Mean AQI: **~93.6** (categorized as **Satisfactory** for over 67% of days).
+  - Acts as the baseline for a well-planned plains/foothills city before entering the Himalayas.
+  - Experiences seasonal winter spikes primarily due to regional transport and crop-residue burning in neighboring Punjab/Haryana.
 
-### Technical Module
-- **Statistical Testing** — owns the hypothesis testing section:
-  - Normality test (D'Agostino-Pearson) — why data is non-normal / right-skewed
-  - Kruskal-Wallis H-test — are the 4 cities significantly different? (H = 905.64, p < 10⁻¹⁹⁶)
-  - Post-hoc Mann-Whitney U tests with Bonferroni correction — pairwise city comparisons
-  - Interpret p-values and statistical significance for a non-technical audience
+#### Your Technical Responsibilities (Machine Learning):
+- **Problem Setup:** Multi-class classification to predict the official CPCB AQI category (`Good`, `Satisfactory`, `Moderate`, `Poor`, `Very Poor`) based on 6 pollutant concentrations + elevation.
+- **Data Splitting & Preprocessing:**
+  - 80% Training (1,168 samples), 20% Testing (292 samples) using **Stratified sampling** to preserve rare category proportions.
+  - Standard scaling applied for linear algorithms.
+- **Model 1 (Baseline):** Multinomial Logistic Regression — achieved **88.36% accuracy**.
+- **Model 2 (Production):** Random Forest Classifier (100 estimators, max depth 12) — achieved **97.95% accuracy** with a weighted F1-score of **0.98**.
+- **Feature Importance Insights:** Explain to your professor that **$PM_{2.5}$ and $PM_{10}$ contribute over 85% of the total predictive power**, proving that particulate matter is the primary driver of air quality degradation in North India.
 
-### Presentation Slides
-1. Why we need statistical tests (not just looking at charts)
-2. Normality test results → justification for non-parametric methods
-3. Kruskal-Wallis result and interpretation
-4. Solan city profile — comparison with Shimla (same state, different pollution)
-
----
-
-## 👤 Member 4 — **Shimla + Machine Learning & Dashboard**
-
-### City Ownership
-- Explain Shimla as the **cleanest city baseline** — high altitude (2276 m), tourism-driven, no heavy industry
-- Present Shimla's consistently "Good/Satisfactory" AQI days
-
-### Technical Module
-- **Machine Learning** — owns the classification model section:
-  - Feature selection (PM2.5, PM10, NO2, SO2, CO, O3, Elevation)
-  - Train/test split (80/20 stratified)
-  - Random Forest Classifier — accuracy (~98%), confusion matrix, classification report
-  - Feature importance analysis (PM2.5 and PM10 dominate)
-- **Interactive Streamlit Dashboard** — demo the live app during presentation
-  - Show the AQI Predictor tab (sliders → instant prediction)
-
-### Presentation Slides
-1. ML problem formulation — what are we predicting?
-2. Model performance — accuracy, confusion matrix
-3. Feature importance bar chart
-4. Shimla city profile + live dashboard demo
+#### Viva Questions for YOU:
+1. *Why did Random Forest outperform Logistic Regression?*  
+   → Logistic Regression assumes linear boundaries between features, whereas pollution thresholds and AQI breakpoints follow piece-wise non-linear step functions.
+2. *Why did you use Stratified Splitting?*  
+   → Because hazardous categories like "Very Poor" and "Good" are infrequent; simple random sampling could lead to an empty test set for minority classes.
 
 ---
 
-## 📑 Suggested Presentation Flow (15–20 min)
+### 2. 🔴 Teammate 1 — **Delhi + Data Ingestion & Cleaning**
 
-| Order | Who | Topic | Time |
-|:---:|:---|:---|:---:|
-| 1 | **Member 1** | Introduction, Problem Statement, Data Collection, Delhi Analysis | 4 min |
-| 2 | **Member 2** | EDA, Comparative Visualizations, Chandigarh Analysis | 4 min |
-| 3 | **Member 3** | Hypothesis Testing, Statistical Results, Solan Analysis | 4 min |
-| 4 | **Member 4** | ML Classification, Dashboard Demo, Shimla Analysis, Conclusion | 4 min |
-| 5 | **All** | Q&A / Viva | 2–4 min |
+#### City Responsibilities (Delhi):
+- Represents the high-density Indo-Gangetic megacity (Elevation: 216m).
+- Highest mean AQI (**~145.0**, reaching severe levels > 300 in winter) driven by vehicular density, industrial zones, and geographical bowl effects causing temperature inversion.
 
----
-
-## 📂 What Each Person Needs to Study
-
-| Member | Must Know Deeply | Should Know Basics |
-|:---|:---|:---|
-| **M1 (Delhi)** | API fetching, pandas cleaning, CPCB AQI formula | What the charts show, what the ML model does |
-| **M2 (Chandigarh)** | Plotly/Seaborn charts, what patterns mean, reading box plots | How data was collected, what the p-values mean |
-| **M3 (Solan)** | Kruskal-Wallis, Mann-Whitney, p-values, Bonferroni correction | Basic chart reading, what the ML model predicts |
-| **M4 (Shimla)** | Random Forest, accuracy metrics, confusion matrix, Streamlit app | Data pipeline, what the statistical tests proved |
+#### Technical Responsibilities:
+- **Data Acquisition:** Fetching 35,040 hourly continuous monitoring records from the Open-Meteo CAMS atmospheric reanalysis service.
+- **Data Cleansing:** Converting timestamps to IST, aggregating 24-hour averages for 1,460 city-days, checking and imputing missing records.
+- **CPCB Sub-Index Engine:** Demonstrating the linear interpolation formula used by the Central Pollution Control Board (CPCB) to compute sub-indices for $PM_{2.5}, PM_{10}, NO_2, SO_2, CO,$ and $O_3$.
 
 ---
 
-## ⚠️ Viva Preparation — Common Questions Teachers Ask
+### 3. 🟢 Teammate 2 — **Solan + Exploratory Data Analysis (EDA)**
 
-Every member should be ready for these:
+#### City Responsibilities (Solan):
+- Represents the mid-hill industrial transit corridor (Elevation: 1,502m).
+- Demonstrates that **altitude alone does not guarantee clean air** due to the proximity of the Baddi-Barotiwala-Nalagarh pharmaceutical hub and heavy truck traffic on NH-5.
 
-1. **"Why these 4 cities?"** → Topographical contrast: plains megacity vs foothills vs industrial hills vs high-altitude resort
-2. **"Why Kruskal-Wallis and not ANOVA?"** → Data is non-normal (right-skewed), so non-parametric test is appropriate
-3. **"What is AQI and how is it calculated?"** → Max of all pollutant sub-indices using CPCB breakpoint formula
-4. **"Which pollutant is most dangerous?"** → PM2.5 — it penetrates deep into lungs; it's also the top feature in our ML model
-5. **"Why is Solan more polluted than Shimla despite both being in Himachal?"** → Industrial belt (Baddi corridor), lower elevation, highway traffic
-6. **"What ML model did you use and why?"** → Random Forest — handles non-linear relationships, no feature scaling needed, 98% accuracy
-7. **"What is the practical use of this project?"** → City planners can identify pollution sources; citizens can check air quality trends; policymakers can compare intervention effectiveness
+#### Technical Responsibilities:
+- **Comparative Boxplots:** Revealing the distribution spread, skewness, and extreme outliers of $PM_{2.5}$ and $PM_{10}$ relative to NAAQS standards.
+- **14-Day Rolling AQI Trend:** Demonstrating how winter peaks impact plains vs. hill towns.
+- **Seasonal Analysis:** Presenting the monsoon wash-out effect across Summer, Monsoon, Post-Monsoon, and Winter.
+- **24-Hour Diurnal Curves:** Explaining the morning (8–10 AM) and evening (7–10 PM) rush-hour pollution peaks.
+
+---
+
+### 4. 🟠 Teammate 3 — **Shimla + Statistical Hypothesis Testing**
+
+#### City Responsibilities (Shimla):
+- High-altitude Himalayan hill resort (Elevation: 2,276m).
+- Cleanest city baseline in the study with mean $PM_{2.5}$ of only **18.6 $\mu g/m^3$** and over **87% of days categorized as Good or Satisfactory**.
+
+#### Technical Responsibilities:
+- **Normality Testing:** Presenting the D'Agostino-Pearson tests showing $p < 10^{-10}$ for all cities, mathematically justifying why standard parametric ANOVA cannot be used.
+- **Kruskal-Wallis H-Test:** Explaining the non-parametric ANOVA across all 4 groups ($H = 905.64, p = 5.29 \times 10^{-196}$) to prove that city differences are statistically significant.
+- **Post-Hoc Mann-Whitney U Tests:** Showing pairwise comparisons with Bonferroni correction ($\alpha_{adj} = 0.0083$), specifically showing that **Solan and Shimla have statistically distinct pollution levels ($p < 0.001$)** despite both being in Himachal Pradesh.
+
+---
+
+## ⏱️ Recommended 15-Minute Presentation Sequence
+
+```
+[0:00 - 3:30]  Teammate 1: Project Objective, Data Sourcing, Cleaning, Delhi Profile
+[3:30 - 7:00]  Teammate 2: EDA, Comparative Plots, Seasonal Trends, Solan Profile
+[7:00 - 10:30] Teammate 3: Statistical Tests, Normality, Kruskal-Wallis, Shimla Profile
+[10:30 - 14:00] YOU:       ML Architecture, Random Forest Evaluation, Chandigarh Profile
+[14:00 - 15:00] ALL:       Final Conclusion & Q&A / Viva with Teacher
+```
